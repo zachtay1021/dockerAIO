@@ -17,21 +17,22 @@ def main():
                 print('\n')
 
             elif user_choice == 'list':
-                print('List all containers')
+                print('\n')
                 for container in client.containers.list(all=True):
-                    print('Name: {:20s} | ID: {:50s} | Image: {:20s} | Status: {:20s}'.format(container.name, container.id, container.image, container.status))
+                    print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
+                print('\n')
 
             elif user_choice == 'stop':
-                container_stop()
+                print('stop container')
 
             elif user_choice == 'start':
-                container_start()
+                print('start container')
 
             elif user_choice == 'create':
-                container_create()
+                print('create container')
 
             elif user_choice == 'change':
-                change()
+                print('change target ip')
 
             elif user_choice == 'exit':
                 sys.exit()
@@ -41,22 +42,6 @@ def main():
 
     except docker.errors.DockerException:
         print('Could not connect to target IP.')
-
-
-def container_stop():
-    print('Stop containers')
-
-
-def container_start():
-    print('Start containers')
-
-
-def container_create():
-    print('Create containers')
-
-
-def change():
-    print('Change target_ip')
 
 
 main()
