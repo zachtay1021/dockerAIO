@@ -15,20 +15,27 @@ def main():
                 print('\n')
                 print('Commands: list, stop, start, create, change, exit, help')
                 print('\n')
+
             elif user_choice == 'list':
                 print('List all containers')
-                for container in client.containers.list():
-                    print(container.id)
+                for container in client.containers.list(all=True):
+                    print('Name: {:20s} | ID: {:50s} | Image: {:20s} | Status: {:20s}'.format(container.name, container.id, container.image, container.status))
+
             elif user_choice == 'stop':
                 container_stop()
+
             elif user_choice == 'start':
                 container_start()
+
             elif user_choice == 'create':
                 container_create()
+
             elif user_choice == 'change':
                 change()
+
             elif user_choice == 'exit':
                 sys.exit()
+
             else:
                 print('Command not found.')
 
