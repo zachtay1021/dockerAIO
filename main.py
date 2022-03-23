@@ -7,7 +7,8 @@ import sys
 def main():
     target_ip = input('Target IP: ')
     try:
-        # client = docker.DockerClient(base_url='tcp://' + target_ip + ':2375')
+        client = docker.DockerClient(base_url='tcp://' + target_ip + ':2375')
+        global client
         exitTrue = False
         while exitTrue is False:
             user_choice = input("Enter a command. Type 'help' to see list of commands. >> ")
@@ -36,7 +37,8 @@ def main():
 
 def container_list():
     print('List all containers')
-
+    for container in client.containers.list():
+        print(container.id)
 
 def container_stop():
     print('Stop containers')
