@@ -2,6 +2,7 @@
 
 import docker
 import sys
+import time
 
 
 def main():
@@ -24,24 +25,30 @@ def main():
 
             elif user_choice == 'stop':
                 container_name = input('Container to stop: ')
-                if container_name in client.containers.list(all=True):
-                    container = client.containers.get(container_name)
-                    container.stop()
-                    print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
-                else:
-                    print('Container not found.')
+                for container in client.containers.list(all=True):
+                    if container_name in container.name:
+                        container = client.containers.get(container_name)
+                        container.stop()
+                        print('Stopping container...')
+                        time.sleep(5)
+                        print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
+                    else:
+                        print('Container not found.')
 
             elif user_choice == 'start':
                 container_name = input('Container to start: ')
-                if container_name in client.containers.list(all=True):
-                    container = client.containers.get(container_name)
-                    container.start()
-                    print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
-                else:
-                    print('Container not found.')
+                for container in client.containers.list(all=True):
+                    if container_name in container.name:
+                        container = client.containers.get(container_name)
+                        container.start()
+                        print('Starting container...')
+                        time.sleep(5)
+                        print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
+                    else:
+                        print('Container not found.')
 
-            elif user_choice == 'create':
-                client.containers.run(image='ubuntu', command='bash', name='ubuntu', privileged=True, remove=True, detach=True, tty=True, stdin_open=True, network_mode="host", mounts='/:/mnt')
+            elif user_choice == 'create':  # NEED TO FIGURE OUT HOW TO MOUNT VOLUMES
+                client.containers.run(image='ubuntu', name='ubuntu', detach=True, stdin_open=True, network_mode="host")
                 print("Container created")
 
             elif user_choice == 'change':
