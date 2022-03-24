@@ -48,7 +48,18 @@ def main():
                         print('Container not found.')
 
             elif user_choice == 'create':  # NEED TO FIGURE OUT HOW TO MOUNT VOLUMES
-                client.containers.run(image='ubuntu', command='bash', name='ubuntu', privileged=True, remove=True, detach=True, tty=True, stdin_open=True, network_mode="host")
+                volumes = ['/host_location']
+                volume_bindings = {
+                    '/host_location': {
+                        'bind': '/container_location',
+                        'mode': 'rw',
+                    },
+                }
+                host_config = client.create_host_config(
+                    binds=volume_bindings
+                )
+
+                client.containers.run(image='ubuntu', command='bash', name='ubuntu', privileged=True, remove=True, detach=True, tty=True, stdin_open=True, network_mode="host", volumes=volumes, host_config=host_config)
                 print("Container created")
 
             elif user_choice == 'change':
