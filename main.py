@@ -48,7 +48,7 @@ def main():
                         print('Container not found.')
 
             elif user_choice == 'create':  # NEED TO FIGURE OUT HOW TO MOUNT VOLUMES
-                client.containers.run(image='ubuntu', name='ubuntu', detach=True, stdin_open=True, network_mode="host")
+                client.containers.run(image='ubuntu', command='bash', name='ubuntu', privileged=True, remove=True, detach=True, tty=True, stdin_open=True, network_mode="host")
                 print("Container created")
 
             elif user_choice == 'change':
