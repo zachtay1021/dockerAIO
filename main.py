@@ -23,16 +23,33 @@ def main():
                 print('\n')
 
             elif user_choice == 'stop':
-                print('stop container')
+                container_name = input('Container to stop: ')
+                if container_name in client.containers.list(all=True):
+                    container = client.containers.get(container_name)
+                    container.stop()
+                    print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
+                else:
+                    print('Container not found.')
 
             elif user_choice == 'start':
-                print('start container')
+                container_name = input('Container to start: ')
+                if container_name in client.containers.list(all=True):
+                    container = client.containers.get(container_name)
+                    container.start()
+                    print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
+                else:
+                    print('Container not found.')
 
             elif user_choice == 'create':
-                print('create container')
+                client.containers.run(image='ubuntu', command='bash', name='ubuntu', privileged=True, remove=True, detach=True, tty=True, stdin_open=True, network_mode="host", mounts='/:/mnt')
+                print("Container created")
 
             elif user_choice == 'change':
-                print('change target ip')
+                new_ip = input('Enter new IP: ')
+                try:
+                    client = docker.DockerClient(base_url='tcp://' + new_ip + ':2375')
+                except docker.errors.DockerException:
+                    print('Could not connect to target IP.')
 
             elif user_choice == 'exit':
                 sys.exit()
