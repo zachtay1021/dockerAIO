@@ -58,6 +58,8 @@ def main():
                 try:
                     client = docker.DockerClient(base_url='tcp://' + new_ip + ':2375')
                 except docker.errors.DockerException:
+                    print(client)
+                    print(new_ip)
                     print('Could not connect to target IP.')
 
             elif user_choice == 'exit':
