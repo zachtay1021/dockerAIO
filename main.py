@@ -30,8 +30,6 @@ def main():
                         container = client.containers.get(container_name)
                         container.stop()
                         print('Stopping container...')
-                        time.sleep(5)
-                        print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
                     else:
                         print('Container not found.')
 
@@ -42,8 +40,6 @@ def main():
                         container = client.containers.get(container_name)
                         container.start()
                         print('Starting container...')
-                        time.sleep(5)
-                        print('| Name: {} | ID: {} | Status: {} |'.format(container.name, container.id, container.status))
                     else:
                         print('Container not found.')
 
